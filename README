@@ -1,0 +1,33 @@
+＜＜郵便番号検索アプリ＞＞
+
+PHPとMySQL、Bootstrap( http://getbootstrap.com/ )を使用
+
+index.htmlを開き、検索キーワードを入力する。（候補も表示される）
+↓
+「けんさく」ボタンで検索
+↓
+検索結果一覧が表示される。郵便番号をクリックするとgooglemapが表示される
+
+・検索候補表示機能
+jQuery UIのAutocomplete というウィジェットを用いて実現
+	index.htmlで文字が入力されるとjQueryによってautocomplete.phpが呼び出される
+	↓
+	autocomplete.phpでは、index.htmlに入力された文字列をもちいてDBから候補を１０件とりだし、返す
+	↓
+	index.htmlに表示される
+
+参考：http://php-archive.net/php/jquery-ui-autocomplete/
+
+・google map表示機能
+Google Maps JavaScript API v3を用いて実現
+	js/getMap.js内のgetCELL()関数で、show.phpで表示される表の郵便番号の部分をクリック可能とし、
+	クリックされたら Mclk()関数が呼び出されるようにする。
+	↓
+	Mclk()関数ではクリックされた郵便番号を取得し、getGeo()関数を呼び出す
+	↓
+	getGeo()関数ではGoogle Maps APIを用いて、郵便番号の緯度経度を取得する。
+	そして、緯度経度を引数としてgoogleMapsSyncer()関数を呼び出す
+	↓
+	googleMapsSyncer()内ではGoogle Maps APIを用いて、HTMLのCanvas内に地図を表示する
+
+参考：http://syncer.jp/google-maps-javascript-api-matome
